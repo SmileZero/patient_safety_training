@@ -1,0 +1,6 @@
+Django==1.11.13
+flake8==3.5.0
+django-extensions==2.0.7
+requests==2.18.4
+pysolr==3.7.0
+beautifulsoup4==4.6.0
