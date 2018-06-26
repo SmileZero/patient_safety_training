@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
-SOLR_DNS = "107.23.206.56"
+SOLR_DNS = "ec2-54-152-147-118.compute-1.amazonaws.com"
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
