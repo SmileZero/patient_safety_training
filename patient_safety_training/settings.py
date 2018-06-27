@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'patient_safety_training.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('DB_NAME',default='patient_safety_training_development'),
+        'NAME': env('DB_NAME', default='patient_safety_training_development'),
         'USER': env('DB_USER', default='root'),
         'PASSWORD': env('DB_PWD', default=''),
         'HOST': env('DB_HOST', default='localhost'),
