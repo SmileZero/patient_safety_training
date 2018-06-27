@@ -7,7 +7,7 @@ from django.db import models
 
 
 class Maude(models.Model):
-    mdr_report_key = models.CharField(max_length=191)
+    mdr_report_key = models.BigIntegerField()
     device_problem = models.CharField(max_length=191)
     brand_name = models.TextField(blank=True, null=True)
     manufacturer_name = models.TextField(blank=True, null=True)

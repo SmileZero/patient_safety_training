@@ -3,20 +3,18 @@ from bs4 import BeautifulSoup
 import re
 import pysolr
 import traceback
-import logging
 from django.conf import settings
 from django.db import transaction
 from .models import Maude
 
-logger = logging.getLogger(__name__)
-
 
 class DeviceProblemScrapper:
-    def __init__(self, fromID, toID):
+    def __init__(self, fromID, toID, status_logger):
         self.fromID = fromID
         self.toID = toID
         self.lastID = toID
         self.finalResult = []
+        self.status_logger = status_logger
 
     def parse_p(self, id):
         params = {'mdrfoi__id': id}
@@ -40,8 +38,10 @@ class DeviceProblemScrapper:
                                 ']&q=*:*&rows=100000000&wt=json')
         solr = pysolr.Solr('http://' + settings.SOLR_DNS + ':8983/solr/deviceProblems/', timeout=1000000)
         response = response.json()
+        self.status_logger.write("%d documents found.\n" % response['response']['numFound'])
 
         try:
+            self.status_logger.write("Writing to MySQL...\n")
             with transaction.atomic():
                 dpDictList = []
                 for doc in response['response']['docs']:
@@ -77,7 +77,9 @@ class DeviceProblemScrapper:
                                 })
                                 dpDictList.append(DPDictionary)
                             self.lastID = id[0]
-                    solr.add(dpDictList)
+                self.status_logger.write("Writing to Solr...\n")
+                solr.add(dpDictList)
+                self.status_logger.write("Write Complete\n")
         except Exception as e:
-            logger.error(e.message)
-            logger.error(traceback.format_exc())
+            self.status_logger.write("[Error] %s...\n" % e.message)
+            self.status_logger.write(traceback.format_exc())
