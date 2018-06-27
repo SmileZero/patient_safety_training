@@ -11,15 +11,16 @@ from django.db.models import Max
 
 
 def training(request, end_report_key):
-    if os.path.isfile(settings.TRAINING_LOG_FILE):
-        return JsonResponse({"status": "already started"})
+    if request.method == 'POST':
+        if os.path.isfile(settings.TRAINING_LOG_FILE):
+            return JsonResponse({"status": "already started"})
 
-    start_report_key = Maude.objects.all().aggregate(Max('mdr_report_key')).get('mdr_report_key__max')
-    if not start_report_key:
-        start_report_key = 0
+        start_report_key = Maude.objects.all().aggregate(Max('mdr_report_key')).get('mdr_report_key__max')
+        if not start_report_key:
+            start_report_key = 0
 
-    TrainingHelper(start_report_key, end_report_key).start()
-    return JsonResponse({"status": "ok"})
+        TrainingHelper(start_report_key, end_report_key).start()
+        return JsonResponse({"status": "ok"})
 
 
 def status(request):
