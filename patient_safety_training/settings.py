@@ -14,7 +14,8 @@ import os
 import environ
 env = environ.Env(
     # set casting, default value
-    DEBUG=(bool, True)
+    DEBUG=(bool, True),
+    ALLOWED_HOSTS=(list, [])
 )
 # reading .env file
 environ.Env.read_env('.env')
@@ -35,8 +36,7 @@ SECRET_KEY = env('SECRET_KEY', default='ak(bh6aw46s-x@@-&wj-og)5chh^1a%h6l!++#j(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['localhost', env('HOST_IP', default='127.0.0.1')]
-
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 # Application definition
 
