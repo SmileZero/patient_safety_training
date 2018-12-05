@@ -99,7 +99,7 @@ class GetNoisePhrase:
         model = KeyedVectors.load_word2vec_format('/data/PubMed-and-PMC-w2v.bin', binary=True)
         df = pd.read_csv('/data/Processed-V3.csv')
         #print(df.head())
-        mdr_df = pd.read_table('meddra.tsv',sep = '\t',header=None)
+        mdr_df = pd.read_table('/data/meddra.tsv',sep = '\t',header=None)
         #print(mdr_df[3])
 
 
