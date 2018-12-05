@@ -46,7 +46,7 @@ class OnlineTraining:
         noise = []
         connection = urlopen(config.solrURL+'noise/select?fl=phrase_str&q=*:*&rows=1000000000&wt=json')           
         response = simplejson.load(connection)
-        self.status_logger.write(response['response']['numFound'], "documents found.")
+        #print(response['response']['numFound'], "documents found.")
         noise = [doc["phrase_str"][0] for doc in response['response']['docs']]
         solrNoise = pysolr.Solr(config.solrURL+'noise/')
         solrNoise.delete(q='*:*')
@@ -80,7 +80,7 @@ class OnlineTraining:
             if y[i] == preds[i]:
                 corr += 1
         self.status_logger.write('Accuracy on validation set is:')
-        self.status_logger.write(corr * 1.0/len(y))
+        #print(corr * 1.0/len(y))
         self.status_logger.write('Validation down')
 
 
