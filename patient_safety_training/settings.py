@@ -11,25 +11,32 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-
-TRAINING_LOG_FILE = '/tmp/patient_safety_training.log'
-
-SOLR_DNS = 'ec2-54-152-147-118.compute-1.amazonaws.com'
+import environ
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, True),
+    ALLOWED_HOSTS=(list, [])
+)
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# reading .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+TRAINING_LOG_FILE = '/tmp/patient_safety_training.log'
+
+SOLR_DNS = env('SOLR_DNS', default='ec2-54-152-147-118.compute-1.amazonaws.com')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ak(bh6aw46s-x@@-&wj-og)5chh^1a%h6l!++#j(@(2*oi6xgp'
+SECRET_KEY = env('SECRET_KEY', default='ak(bh6aw46s-x@@-&wj-og)5chh^1a%h6l!++#j(@(2*oi6xgp')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 # Application definition
 
@@ -81,11 +88,11 @@ WSGI_APPLICATION = 'patient_safety_training.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'patient_safety_training_development',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': env('DB_NAME', default='patient_safety_training_development'),
+        'USER': env('DB_USER', default='root'),
+        'PASSWORD': env('DB_PWD', default=''),
+        'HOST': env('DB_HOST', default='localhost'),
+        'PORT': env('DB_PORT', default=''),
         'OPTIONS': {'charset': 'utf8mb4'},
     }
 }

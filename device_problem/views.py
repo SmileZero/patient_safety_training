@@ -6,10 +6,10 @@ from .models import Maude
 import os.path
 from django.conf import settings
 from django.db.models import Max
+from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
 
-
+@csrf_exempt
 def training(request, end_report_key):
     if request.method == 'POST':
         if os.path.isfile(settings.TRAINING_LOG_FILE):
