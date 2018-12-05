@@ -78,7 +78,7 @@ class GetNoisePhrase:
             words = report.split(r';')
             similarity = []
             words = self.cleanWordList(words)
-            self.status_logger.write(words)
+            #self.status_logger.write(words)
             for w in words:
                 similarity.append(self.phraseSimilarity(seed_words,w,m,alpha=threshhold))
             #print(similarity)
@@ -91,7 +91,7 @@ class GetNoisePhrase:
         #tags_df['cleanedTags'] = cleaned
         #tags_df.to_csv(outname)
         self.status_logger.write("--- %f Minutes ---" % ((time.time() - start_time)/60))
-        self.status_logger.write(last)  
+        #self.status_logger.write(last)  
         return cleaned
 
 
