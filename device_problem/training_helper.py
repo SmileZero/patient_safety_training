@@ -1,7 +1,8 @@
 from .device_problem_scrapper import DeviceProblemScrapper
 import threading
 from django.conf import settings
-
+from training.getnoise.GetNoisePhrase import GetNoisePhrase
+from training.OnlineTraining import OnlineTraining
 
 class TrainingHelper(threading.Thread):
     def __init__(self, start_report_key, end_report_key):
@@ -21,13 +22,16 @@ class TrainingHelper(threading.Thread):
 
         status_logger.write("Scraping Done\n")
 
-        # TODO: get noise
+        # get noise
         status_logger.write("Start Getting Noise From Solr...\n")
-
+        file = 'medicalData_V2.csv'
+        noisePhrase = GetNoisePhrase(file, status_logger)
+        noisePhrase.getNoise()
         status_logger.write("Getting Noise Done\n")
 
-        # TODO: run training
+        # run training
         status_logger.write("Start Training...\n")
-
+        validate = True
+        onlineTraining = OnlineTraining(validate, status_logger)
+        onlineTraining.start()
         status_logger.write("Training Done\n")
-        status_logger.close()
