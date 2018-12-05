@@ -1,0 +1,1 @@
+solrURL = "http://ec2-54-235-235-187.compute-1.amazonaws.com:8983/solr/"
