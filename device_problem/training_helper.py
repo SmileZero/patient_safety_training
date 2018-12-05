@@ -24,7 +24,7 @@ class TrainingHelper(threading.Thread):
 
         # get noise
         status_logger.write("Start Getting Noise From Solr...\n")
-        file = 'medicalData_V2.csv'
+        file = '/data/medicalData_V2.csv'
         noisePhrase = GetNoisePhrase(file, status_logger)
         noisePhrase.getNoise()
         status_logger.write("Getting Noise Done\n")
